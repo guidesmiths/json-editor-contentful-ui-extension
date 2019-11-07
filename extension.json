@@ -1,0 +1,8 @@
+{
+  "id": "json-editor-contentful-ui-extension",
+  "name": "json-editor-contentful-ui-extension",
+  "srcdoc": "./build/index.html",
+  "fieldTypes": [
+    "Object"
+  ]
+}
