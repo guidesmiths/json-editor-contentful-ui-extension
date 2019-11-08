@@ -1,5 +1,5 @@
 import React from 'react';
-import { App } from './index';
+import Extension from './Extension';
 import { render, fireEvent, cleanup, configure } from '@testing-library/react';
 
 configure({
@@ -7,7 +7,7 @@ configure({
 });
 
 function renderComponent(sdk) {
-  return render(<App sdk={sdk} />);
+  return render(<Extension sdk={sdk} />);
 }
 
 const sdk = {
@@ -22,7 +22,7 @@ const sdk = {
   }
 };
 
-describe('App', () => {
+describe('Extension', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
