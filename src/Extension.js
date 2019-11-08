@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import schema from './schema.json';
-
 function debounce(func, wait) {
   let timeout;
   return function () {
@@ -45,11 +43,10 @@ const Extension = ({ sdk }) => {
   }, [detachExternalChangeHandler, jsonEditor, sdk.field, sdk.window]);
 
   const createEditor = useCallback(() => {
-    const inputSchema = sdk.entry.fields["schema"].getValue();
-
+    const schemaName = sdk.parameters.instance.schemaName;
     const editorRef = new JSONEditor(ref.current, { // eslint-disable-line no-undef
-      // ajax: true,
-      // ajaxBase: 'https://github.com/guidesmiths/json-editor-contentful-ui-extension/blob/master/src/', //'https://json-schema.org/learn/examples/',
+      ajax: true,
+      ajaxBase: 'https://raw.githubusercontent.com/guidesmiths/json-editor-contentful-ui-extension/master/schemas/',
       compact: false,
       disable_array_add: false,
       disable_array_delete: false,
@@ -63,24 +60,22 @@ const Extension = ({ sdk }) => {
       iconlib: null,
       remove_button_labels: false,
       no_additional_properties: true,
-      // refs	An object containing schema definitions for URLs. Allows you to pre-define external schemas.	{}
+      // refs: {} // An object containing schema definitions for URLs. Allows you to pre-define external schemas.
       required_by_default: true,
       keep_oneof_values: true,
-      schema: schema,
-      // schema: {
-      //   $ref: inputSchema, // 'geographical-location.schema.json',
-      // },
-      show_errors: 'always', // interaction, change, always, never
+      schema: {
+        $ref: schemaName,
+      },
+      show_errors: 'always', // interaction | change | always | never
       startval: value,
       template: 'default',
       theme: 'foundation5',
       display_required_only: false,
       show_opt_in: true,
       prompt_before_delete: false,
+      object_layout: 'table'
     });
     setJSONEditor(editorRef);
-
-    console.log('editor', editorRef);
   }, [ref, sdk.entry.fields]);
 
   const initializeEditor = useCallback(() => {
@@ -89,9 +84,7 @@ const Extension = ({ sdk }) => {
       validateAndSave();
     };
 
-    console.log('KEYS', jsonEditor.editors);
     Object.keys(jsonEditor.editors).forEach(key => {
-      console.log('Key', key);
       if (Object.prototype.hasOwnProperty.call(jsonEditor.editors, key) && key !== 'root') {
         jsonEditor.watch(key, watcherCallback.bind(jsonEditor, key));
       }
