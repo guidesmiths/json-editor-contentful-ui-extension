@@ -6,7 +6,24 @@
     "Object"
   ],
   "parameters": {
+    "installation": [
+      {
+        "id": "defaultSchemaPath",
+        "name": "Default JSON Schema Path",
+        "description": "Default base path to look for the JSON schemas",
+        "type": "Symbol",
+        "required": true,
+        "default": "https://raw.githubusercontent.com/guidesmiths/json-editor-contentful-ui-extension/master/schemas/"
+      }
+    ],
     "instance": [
+      {
+        "id": "overridenSchemaPath",
+        "name": "Overriden Schema Path",
+        "description": "Overriden base path to look for this specific JSON schema",
+        "type": "Symbol",
+        "required": false
+      },
       {
         "id": "schemaName",
         "name": "Schema Name",
