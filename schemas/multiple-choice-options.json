@@ -24,11 +24,13 @@
             "properties": {
               "tag": {
                 "type": "string",
-                "title": "tag"
+                "title": "tag",
+                "minLength": 1
               },
               "text": {
                 "type": "string",
-                "title": "text"
+                "title": "text",
+                "minLength": 1
               },
               "correctAnswer": {
                 "type": "boolean",
