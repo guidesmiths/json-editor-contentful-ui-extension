@@ -1,43 +1,32 @@
 {
   "$schema": "http://json-schema.org/schema#",
   "title": "Multiple Choice",
-  "oneOf": [
-    {
-      "$ref": "#/definitions/multipleChoice",
-      "title": "Multiple Choice"
-    }
-  ],
-  "definitions": {
-    "multipleChoice": {
-      "title": "Multiple Choice",
-      "type": "object",
-      "id": "multipleChoice",
-      "properties": {
-        "options": {
-          "type": "array",
-          "format": "table",
-          "title": "Options",
-          "uniqueItems": true,
-          "minItems": 2,
-          "items": {
-            "type": "object",
-            "properties": {
-              "tag": {
-                "type": "string",
-                "title": "tag",
-                "minLength": 1
-              },
-              "text": {
-                "type": "string",
-                "title": "text",
-                "minLength": 1
-              },
-              "correctAnswer": {
-                "type": "boolean",
-                "format": "checkbox",
-                "title": " correct answer?"
-              }
-            }
+  "type": "object",
+  "id": "multipleChoice",
+  "properties": {
+    "options": {
+      "type": "array",
+      "format": "table",
+      "title": "Options",
+      "uniqueItems": true,
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "title": "tag",
+            "minLength": 1
+          },
+          "text": {
+            "type": "string",
+            "title": "text",
+            "minLength": 1
+          },
+          "correctAnswer": {
+            "type": "boolean",
+            "format": "checkbox",
+            "title": " correct answer?"
           }
         }
       }
