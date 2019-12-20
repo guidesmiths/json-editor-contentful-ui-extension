@@ -70,7 +70,10 @@ const Extension = ({ sdk }) => {
         display_required_only: false,
         show_opt_in: true,
         prompt_before_delete: false,
-        object_layout: 'table'
+        object_layout: 'table',
+        plugin: {
+          selectize: true,
+        },
       });
 
       editorRef.on('ready', () => {
