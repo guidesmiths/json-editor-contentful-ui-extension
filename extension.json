@@ -12,7 +12,7 @@
         "name": "Default JSON Schema Path",
         "description": "Default base path to look for the JSON schemas",
         "type": "Symbol",
-        "required": true,
+        "required": false,
         "default": "https://raw.githubusercontent.com/guidesmiths/json-editor-contentful-ui-extension/master/schemas/"
       }
     ],
