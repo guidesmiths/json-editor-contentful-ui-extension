@@ -6,8 +6,10 @@
   "properties": {
     "categories": {
       "type": "array",
-      "minItems": 1,
+      "format": "table",
+      "title": "Categories",
       "uniqueItems": true,
+      "minItems": 1,
       "items": {
         "type": "object",
         "properties": {
