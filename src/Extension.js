@@ -19,13 +19,13 @@ const Extension = ({ sdk }) => {
         sdk.window.updateHeight();
         validateAndSave();
       };
-    
+
       Object.keys(editorRef.editors).forEach(key => {
         if (Object.prototype.hasOwnProperty.call(editorRef.editors, key) && key !== 'root') {
           editorRef.watch(key, watcherCallback.bind(editorRef, key));
         }
       });
-  
+
       const validateAndSave = _debounce(() => {
         const errors = editorRef.validate();
         if (errors.length === 0) {
@@ -42,45 +42,48 @@ const Extension = ({ sdk }) => {
       const schemaPath = sdk.parameters.instance.overridenSchemaPath || defaultSchemaPath;
       const schemaName = sdk.parameters.instance.schemaName;
 
-      const editorRef = new JSONEditor(ref.current, { // eslint-disable-line no-undef
-        ajax: true,
-        ajaxBase: schemaPath,
-        compact: false,
-        disable_array_add: false,
-        disable_array_delete: false,
-        disable_array_reorder: false,
-        enable_array_copy: false,
-        disable_collapse: true,
-        disable_edit_json: true,
-        disable_properties: true,
-        array_controls_top: true,
-        form_name_root: 'root',
-        iconlib: null,
-        remove_button_labels: false,
-        no_additional_properties: true,
-        // refs: {} // An object containing schema definitions for URLs. Allows you to pre-define external schemas.
-        required_by_default: true,
-        keep_oneof_values: true,
-        schema: {
-          $ref: schemaName,
-        },
-        show_errors: 'never', // interaction | change | always | never
-        startval: value,
-        template: 'default',
-        display_required_only: false,
-        show_opt_in: true,
-        prompt_before_delete: false,
-        object_layout: 'table',
-        plugin: {
-          selectize: true,
-        },
-      });
+      fetch(`${schemaPath}${schemaName}`)
+        .then(response => response.text())
+        .then(data => {
+          try {
+            const editorRef = new JSONEditor(ref.current, { // eslint-disable-line no-undef
+              compact: false,
+              disable_array_add: false,
+              disable_array_delete: false,
+              disable_array_reorder: false,
+              enable_array_copy: false,
+              disable_collapse: true,
+              disable_edit_json: true,
+              disable_properties: true,
+              array_controls_top: true,
+              form_name_root: 'root',
+              iconlib: null,
+              remove_button_labels: false,
+              no_additional_properties: true,
+              required_by_default: true,
+              keep_oneof_values: true,
+              schema: JSON.parse(data),
+              show_errors: 'never', // interaction | change | always | never
+              startval: value,
+              template: 'default',
+              display_required_only: false,
+              show_opt_in: true,
+              prompt_before_delete: false,
+              object_layout: 'table',
+              plugin: {
+                selectize: true,
+              },
+            });
 
-      editorRef.on('ready', () => {
-        initializeEditor(editorRef);
-      });
+            editorRef.on('ready', () => {
+              initializeEditor(editorRef);
+            });
 
-      return editorRef;
+            return editorRef;
+          } catch (error) {
+            console.error(error.message);
+          }
+        });
     };
 
     sdk.window.startAutoResizer();
